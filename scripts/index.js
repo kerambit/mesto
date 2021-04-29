@@ -107,7 +107,7 @@ function renderInitialCards() {
 renderInitialCards() */
 
 initialCards.forEach((item) => {
-  const card = new Card(item, '.card-template', openFullImage);
+  const card = new Card(item, '.card-template');
   const cardElement = card.generateCard();
   document.querySelector('.cards').append(cardElement); 
 }); 
