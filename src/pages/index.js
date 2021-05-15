@@ -105,7 +105,18 @@ function openFullImage(name, link) {
   openPopup(popupTypeImage);
 }
 
-const section = new Section({ items:initialCards, renderer: "renderer"}, '.cards');
+const section = new Section({ items:initialCards, renderer: (item) => {
+    const card = new Card(item, (name,link) => {
+      const pupupImageCard = document.querySelector(".popup__image");
+      const popupImageTitle = document.querySelector(".popup__caption");
+      pupupImageCard.src = link;
+      pupupImageCard.alt = name;
+      popupImageTitle.textContent = name;
+    })
+    const cardElement = card.generateCard();
+    return cardElement;
+  }}, '.cards');
+
 section.renderer();
 
 
