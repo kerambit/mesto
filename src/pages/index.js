@@ -4,6 +4,7 @@ import FormValidator from "../scripts/components/FormValidator";
 import { validateConfig } from "../scripts/utils/constants.js";
 import "./index.css";
 import Section from "../scripts/components/Section.js";
+import PopupWithImage from "../scripts/components/PopupWithImage";
 
 const popupEditProfile = document.querySelector(".popup_type_edit-profile");
 const openEditProfilePopupBtn = document.querySelector(".profile__edit-button");
@@ -106,13 +107,8 @@ function openFullImage(name, link) {
 }
 
 const section = new Section({ items:initialCards, renderer: (item) => {
-    const card = new Card(item, (name,link) => {
-      const pupupImageCard = document.querySelector(".popup__image");
-      const popupImageTitle = document.querySelector(".popup__caption");
-      pupupImageCard.src = link;
-      pupupImageCard.alt = name;
-      popupImageTitle.textContent = name;
-    })
+    const popupImage = new PopupWithImage(item.name, item.link);
+    const card = new Card(item, popupImage.open)
     const cardElement = card.generateCard();
     return cardElement;
   }}, '.cards');

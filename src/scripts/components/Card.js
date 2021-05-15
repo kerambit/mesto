@@ -18,7 +18,7 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector(this._cardImage).addEventListener("click", () => this._openFullImage(this._name, this._link));
+    this._element.querySelector(this._cardImage).addEventListener("click", () => this._openFullImage());
     this._element.querySelector(this._cardLike).addEventListener("click", this._likeCard);
     this._element.querySelector(this._cardDelete).addEventListener("click", this._deleteCard);
   }
