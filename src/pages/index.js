@@ -43,10 +43,13 @@ const formAddCard = document.querySelector(".popup__container_add");
 //validatorAddCard.enableValidation();
 //validatorEditProfile.enableValidation();
 
+const popupImage = new PopupWithImage('.popup_type_image');
+
 // создание нового элеменита карточки. Где мы из массива берем ссылку, название картинки и альт.
 const section = new Section({ items:initialCards, renderer: (item) => {
-    const popupImage = new PopupWithImage(item.name, item.link);
-    const card = new Card(item, popupImage.open)
+    const handlerCardClick = () => popupImage.open(item);
+
+    const card = new Card(item, handlerCardClick)
     const cardElement = card.generateCard();
     return cardElement;
   }}, '.cards');
