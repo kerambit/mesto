@@ -1,11 +1,11 @@
 import Popup from "./Popup";
 
 export default class PopupWithImage extends Popup {
-
-    constructor(name, link) {
+    constructor(name, link ) {
         super();
         this._name = name;
         this._link = link;
+
     }
 
     open() {
@@ -17,4 +17,5 @@ export default class PopupWithImage extends Popup {
         this._popupImageTitle.textContent = this._name;
         super.open();
     }
+
 }
