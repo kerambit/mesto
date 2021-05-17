@@ -22,7 +22,13 @@ export default class Popup {
   setEventListeners() {
     const closeBtn = this.element.querySelector(".popup__close-button");
 
-    closeBtn.addEventListener('click', this.close)
+    closeBtn.addEventListener('click', this.close);
+
+    document.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains("popup__overlay")) {
+        this.close();
+      }
+    })
 }
 }
 
