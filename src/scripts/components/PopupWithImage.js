@@ -1,9 +1,9 @@
 import Popup from "./Popup";
 
 export default class PopupWithImage extends Popup {
-    constructor(selector) {
-        super();
-        this.element = document.querySelector(selector);
+    constructor(popupSelector) {
+        super(popupSelector);
+
     }
 
     open({name, link}) {
