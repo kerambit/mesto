@@ -10,16 +10,16 @@ import Popup from "../scripts/components/Popup";
 
 
 
-const popupEditProfile = document.querySelector(".popup_type_edit-profile");
+// const popupEditProfile = document.querySelector(".popup_type_edit-profile");
 const openEditProfilePopupBtn = document.querySelector(".profile__edit-button");
 /* Переменая крестик закрытия */
-const closeEditProfilePopupBtn = popupEditProfile.querySelector(".popup__close-button_type_edit");
+// const closeEditProfilePopupBtn = popupEditProfile.querySelector(".popup__close-button_type_edit");
 /* Переменая для контейнера с формой */
-const formEditProfile = popupEditProfile.querySelector(".popup__container_type_edit-profile");
+// const formEditProfile = popupEditProfile.querySelector(".popup__container_type_edit-profile");
 /* Переменая для name */
-const nameInput = formEditProfile.querySelector('[name="name-input"]');
+// const nameInput = formEditProfile.querySelector('[name="name-input"]');
 /* Переменая для job */
-const jobInput = formEditProfile.querySelector('[name="job-input"]');
+// const jobInput = formEditProfile.querySelector('[name="job-input"]');
 /* Переменая для заголовка куда будет добавляться новый текст */
 const newProfileTitle = document.querySelector(".profile__title");
 /* Переменая для текста работы куда будет добавляться новый текст */
@@ -101,16 +101,21 @@ function openAddCardPopup(element) {
   openPopup(popupAdd);
   validatorAddCard.removeInputError();
 }
+const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
+    handlerSubmit: () => {
+        console.log('handler')
+    }
+})
 
 popupEditProfile.setEventListeners();
 
 formAddCard.addEventListener("submit", handleAddCardSubmit);
 //document.addEventListener("click", closePopupClick);
 /* Кнопка "редактировать" открывает модалку */
-openEditProfilePopupBtn.addEventListener("click", openEditProfilePopup);
+openEditProfilePopupBtn.addEventListener("click", () => popupEditProfile.open());
 /* Кнопка "крестик" (закрыть модалку) */
 //closeEditProfilePopupBtn.addEventListener("click", () => closePopup(popupEditProfile));
-formEditProfile.addEventListener("submit", handleEditProfileFormSubmit);
+// formEditProfile.addEventListener("submit", handleEditProfileFormSubmit);
 openAddCardPopupBtn.addEventListener("click", openAddCardPopup);
 //closeAddCardPopupBtn.addEventListener("click", () => closePopup(popupAdd));
 //closeBtnpopupImage.addEventListener("click",close);
