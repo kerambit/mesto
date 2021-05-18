@@ -6,6 +6,7 @@ import "./index.css";
 import Section from "../scripts/components/Section.js";
 import PopupWithImage from "../scripts/components/PopupWithImage";
 import PopupWithForm from "../scripts/components/PopupWithForm";
+import { UserInfo } from  "../scripts/components/UserInfo";
 import Popup from "../scripts/components/Popup";
 
 
@@ -17,13 +18,13 @@ const openEditProfilePopupBtn = document.querySelector(".profile__edit-button");
 const openAddCardPopupBtn = document.querySelector(".profile__add-button");
 
 /* Переменая крестик закрытия */
-//const closeEditProfilePopupBtn = popupEditProfile.querySelector(".popup__close-button_type_edit");
+const closeEditProfilePopupBtn = popupEditProfile.querySelector(".popup__close-button_type_edit");
 /* Переменая для контейнера с формой */
-//const formEditProfile = popupEditProfile.querySelector(".popup__container_type_edit-profile");
+const formEditProfile = popupEditProfile.querySelector(".popup__container_type_edit-profile");
 /* Переменая для name */
-//const nameInput = formEditProfile.querySelector('[name="name-input"]');
+const nameInput = formEditProfile.querySelector('[name="name-input"]');
 /* Переменая для job */
-//const jobInput = formEditProfile.querySelector('[name="job-input"]');
+const jobInput = formEditProfile.querySelector('[name="job-input"]');
 /* Переменая для заголовка куда будет добавляться новый текст */
 const newProfileTitle = document.querySelector(".profile__title");
 /* Переменая для текста работы куда будет добавляться новый текст */
@@ -84,13 +85,14 @@ function closePopup(element) {
 */
 
 
-/* //функция с обработчиком кнопки
+
 function handleEditProfileFormSubmit() {
-  newProfileTitle.textContent = nameInput.value;
-  newProfileText.textContent = jobInput.value;
+  const getProfileData = UserInfo.getUserInfo();
+    nameInput.value = getProfileData.name;
+    jobInput.value = getProfileData.jobName;
   close();
 }
-*/
+
 
 
 function handleAddCardSubmit(evt) {
@@ -107,8 +109,9 @@ function openAddCardPopup(element) {
 }
 
 const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
-    handlerSubmit: () => {
-        console.log('handler')
+    handlerSubmit: (options) => {
+        userInfo.setUserInfo(options);
+        popupEditProfile.close();
     }
 })
 
@@ -124,14 +127,13 @@ const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
 
-formAddCard.addEventListener("submit", handleAddCardSubmit);
+//formAddCard.addEventListener("submit", handleAddCardSubmit);
 //document.addEventListener("click", closePopupClick);
 /* Кнопка "редактировать" открывает модалку */
 openEditProfilePopupBtn.addEventListener("click", () => popupEditProfile.open());
 openAddCardPopupBtn.addEventListener("click", () => popupAddCard.open());
 /* Кнопка "крестик" (закрыть модалку) */
-//closeEditProfilePopupBtn.addEventListener("click", () => closePopup(popupEditProfile));
+closeEditProfilePopupBtn.addEventListener("click", () => popupEditProfile.close());
 //formEditProfile.addEventListener("submit", handleEditProfileFormSubmit);
-
 //closeAddCardPopupBtn.addEventListener("click", () => closePopup(popupAdd));
 //closeBtnpopupImage.addEventListener("click",close);
