@@ -1,13 +1,11 @@
-
 export default class Api {
     constructor(options) {
         this._headers = options.headers;
         this._url = options.url;
+
     }
 
-
-    getUserInfo()
-    {
+    getUserInfo() {
         return fetch(`${this._url}/users/me`, {
             headers: this._headers,
         })
@@ -16,7 +14,6 @@ export default class Api {
                     return res.json();
                 }
 
-                // если ошибка, отклоняем промис
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
             .then(data => console.log(data))
@@ -26,4 +23,7 @@ export default class Api {
             })
     }
 
+
 }
+
+

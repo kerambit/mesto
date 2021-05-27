@@ -25,26 +25,8 @@ const validatorEditProfile = new FormValidator(validateConfig, popupContainerEdi
 const nameInput = document.querySelector('.popup__input_type-name');
 const jobInput = document.querySelector('.popup__input_type-job');
 
-
-
-
-
-
-
-/*fetch('https://nomoreparties.co/v1/f12d97c5-3bd7-4a64-bc24-17e685180ee0/users/me ', {
-    method: 'POST',
-    body: JSON.stringify({
-        "name": "Jacques Cousteau",
-        "about": "Sailor, researcher",
-        "avatar": "https://pictures.s3.yandex.net/frontend-developer/ava.jpg",
-        "_id": "e20537ed11237f86bbb20ccb",
-        "cohort": "cohort0"
-    })
-}); */
-
-
 const api = new Api({
-   url: `https://mesto.nomoreparties.co/v1/${cohortId}`,
+    url: `https://mesto.nomoreparties.co/v1/${cohortId}`,
     headers: {
         authorization: 'f12d97c5-3bd7-4a64-bc24-17e685180ee0',
         'Content-Type': 'application/json',
@@ -52,6 +34,7 @@ const api = new Api({
 });
 
 api.getUserInfo();
+
 
 
 
@@ -89,24 +72,10 @@ function openProfilePopup() {
 
 
 const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
-    handlerSubmit: (options) => {
-        popupEditProfile.renderLoading(true)
-        api.setUserInfo({
-            name: name,
-            about: job
-        })
-            .then((userData) => {
-
-                userInfo.setUserInfo(userData)
-                popupEditProfile.close();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                popupEditProfile.renderLoading(false);
-            })
-    }, api
+    handlerSubmit: (name, about) => {
+        userInfo.setUserInfo(name, about);
+        popupEditProfile.close();
+    }
 });
 
  const popupAddCard = new PopupWithForm('.popup_type_add', {
