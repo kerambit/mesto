@@ -1,5 +1,5 @@
 
-import { cohortId, options  } from "../scripts/utils/constants"
+import { cohortId } from "../scripts/utils/constants"
 import Api from "../scripts/components/Api"
 import Card from "../scripts/components/Card.js";
 import { initialCards } from "../scripts/utils/initialCards.js";
@@ -11,7 +11,6 @@ import PopupWithImage from "../scripts/components/PopupWithImage";
 import PopupWithForm from "../scripts/components/PopupWithForm";
 import { UserInfo } from  "../scripts/components/UserInfo";
 
-const api = new Api(options)
 const cardSelector = document.querySelector('.card-template');
 /* кнопка открытия профиля редактирования */
 const openEditProfilePopupBtn = document.querySelector(".profile__edit-button");
@@ -44,9 +43,15 @@ const jobInput = document.querySelector('.popup__input_type-job');
 }); */
 
 
+const api = new Api({
+   url: `https://mesto.nomoreparties.co/v1/${cohortId}`,
+    headers: {
+        authorization: 'f12d97c5-3bd7-4a64-bc24-17e685180ee0',
+        'Content-Type': 'application/json',
+    }
+});
 
-
-
+api.getUserInfo();
 
 
 
