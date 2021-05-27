@@ -33,13 +33,6 @@ const api = new Api({
     }
 });
 
-api.getUserInfo();
-
-
-
-
-
-
 validatorAddCard.enableValidation();
 validatorEditProfile.enableValidation();
 
@@ -58,6 +51,8 @@ section.renderer();
 const newProfileTitle = document.querySelector(".profile__title"),
     newProfileText = document.querySelector(".profile__text"), userInfo = new UserInfo(newProfileTitle, newProfileText);
 
+api.getUserInfo()
+    .then((data => userInfo.setUserInfo(data)))
 
 
 //Функция открытия попапа редактирования
