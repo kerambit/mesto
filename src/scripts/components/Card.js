@@ -12,10 +12,11 @@ export default class Card {
     this._cardTitle = ".card__title";
     this._card = ".card";
     this._likes = likes;
-    this._owner = owner.id;
+    this._owner = owner._id;
     this._id = id;
     this._userId = userId;
     this._handleCardDelete = handleCardDelete;
+    debugger
   }
 
   _getTemplate() {
