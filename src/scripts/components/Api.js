@@ -77,5 +77,14 @@ export default class Api {
             .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`))
     }
 
+    removeLike(cardId) {
+        return fetch(`${this._url}/cards/likes/${cardId}`,
+            {
+                method: 'DELETE',
+                headers: this._headers
+            })
+            .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`))
+    }
+
 }
 

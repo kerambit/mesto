@@ -120,6 +120,13 @@ function addCard(item) {
                 card._likes = likes;
                 card.updateLikeCount();
             })
+      },
+      handleCardDislike: (cardId) => {
+            api.removeLike(cardId)
+                .then(({likes}) => {
+                    card._likes = likes;
+                    card.updateLikeCount();
+                })
       }
 
       }, '.card-template', userId)

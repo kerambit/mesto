@@ -1,6 +1,6 @@
 
 export default class Card {
-  constructor({name, link,owner, _id, likes}, {handleCardClick, handleCardDelete, handleCardLike}, cardSelector, userId) {
+  constructor({name, link,owner, _id, likes}, {handleCardClick, handleCardDelete, handleCardLike, handleCardDislike}, cardSelector, userId) {
     this._templateElement = document.querySelector(cardSelector);
     this._element = this._getTemplate();
     this._name = name;
@@ -17,6 +17,7 @@ export default class Card {
     this._userId = userId;
     this._handleCardDelete = handleCardDelete;
     this._handleCardLike = handleCardLike;
+    this._handleCardDislike = handleCardDislike;
   }
 
   _getTemplate() {
@@ -26,7 +27,16 @@ export default class Card {
 
   _setEventListeners() {
     this._element.querySelector(this._cardImage).addEventListener("click", () => this._openFullImage(this._name,this._image));
-    this._element.querySelector(this._cardLike).addEventListener("click", () => this._likeCard());
+    this._element.querySelector(this._cardLike).addEventListener("click", () => {
+      const trigger = this._element.querySelector(this._cardLike).classList.contains("card__like-button_active");
+
+      if (trigger) {
+        this._dislikeCard();
+      } else {
+        this._likeCard();
+      }
+
+    });
     this._element.querySelector(this._cardDelete).addEventListener("click", this._deleteCard);
   }
 
@@ -57,6 +67,11 @@ export default class Card {
 
   _likeCard() {
     this._handleCardLike(this._id);
+    this._element.querySelector(this._cardLike).classList.toggle("card__like-button_active");
+  }
+
+  _dislikeCard() {
+    this._handleCardDislike(this._id);
     this._element.querySelector(this._cardLike).classList.toggle("card__like-button_active");
   }
 
