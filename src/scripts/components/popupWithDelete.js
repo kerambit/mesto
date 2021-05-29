@@ -8,7 +8,7 @@ constructor(popup, {submitHandler}) {
  open(cardId, element) {
      super.open();
      this._cardId = cardId;
-     this.element = element;
+     this.cardElement = element;
  }
 
  setEventListeners() {

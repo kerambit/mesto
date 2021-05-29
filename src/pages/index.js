@@ -95,7 +95,7 @@ const  popupDel = new popupWithDelete(popupDelete, {
 submitHandler: (cardId) => {
 api.cardDelete(cardId)
     .then((data)=>{
-        popupDel.element.remove()
+        popupDel.cardElement.remove()
         popupDel.close();
     })
 }
