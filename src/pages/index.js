@@ -21,6 +21,8 @@ const openAddCardPopupBtn = document.querySelector(".profile__add-button");
 const popupContainerAdd = document.querySelector(".popup__container_add");
 const validatorAddCard = new FormValidator(validateConfig, popupContainerAdd);
 
+const popupAvatarEdit = document.querySelector('.profile__edit-button-avatar');
+
 const popupContainerEdit = document.querySelector(".popup__container_type_edit-profile");
 const validatorEditProfile = new FormValidator(validateConfig, popupContainerEdit);
 const nameInput = document.querySelector('.popup__input_type-name');
@@ -102,6 +104,12 @@ api.cardDelete(cardId)
 
 })
 
+const popupAvatar = new PopupWithForm('.popup_type_avatar-update', {
+    handlerSubmit: (data) => {
+        console.log(data);
+    }
+})
+
 
 function addCard(item) {
     const userId = userInfo.getId()
@@ -153,4 +161,8 @@ openAddCardPopupBtn.addEventListener("click", () => {
   validatorAddCard.removeInputError();
   popupAddCard.open()
 });
+
+popupAvatarEdit.addEventListener('click', () => {
+    popupAvatar.open();
+})
 
