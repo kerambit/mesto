@@ -1,5 +1,5 @@
 
-import { cohortId } from "../scripts/utils/constants"
+import { cohortId ,popupDelete} from "../scripts/utils/constants"
 import Api from "../scripts/components/Api"
 import Card from "../scripts/components/Card.js";
 import { initialCards } from "../scripts/utils/initialCards.js";
@@ -10,6 +10,7 @@ import Section from "../scripts/components/Section.js";
 import PopupWithImage from "../scripts/components/PopupWithImage";
 import PopupWithForm from "../scripts/components/PopupWithForm";
 import { UserInfo } from  "../scripts/components/UserInfo";
+import {popupWithDelete} from "../scripts/components/popupWithDelete";
 
 const cardSelector = document.querySelector('.card-template');
 /* кнопка открытия профиля редактирования */
@@ -33,31 +34,40 @@ const api = new Api({
     }
 });
 
+//Получаение инфорации от профиля
+api.getUserInfo()
+    .then(data => userInfo.setUserInfo(data.name,data.about, data.id))
+//Получаение инфорации по карточкам
+api.getInitialCards()
+    .then(data => {
+  section.renderer(data)
+})
+
+
 validatorAddCard.enableValidation();
 validatorEditProfile.enableValidation();
 
 const popupImage = new PopupWithImage('.popup_type_image');
 
 // создание нового элеменита карточки. Где мы из массива берем ссылку, название картинки и альт.
-const section = new Section({ items:initialCards, renderer: (item) => {
+const section = new Section({
+        renderer: (item) => {
         const card = addCard(item);
         section.addItem(card, 'append');
     },}, '.cards');
-section.renderer();
+
 
 
 
 /* Переменая для текста работы куда будет добавляться новый текст */
 const newProfileTitle = document.querySelector(".profile__title"),
-    newProfileText = document.querySelector(".profile__text"), userInfo = new UserInfo(newProfileTitle, newProfileText);
+    newProfileText = document.querySelector(".profile__text"),
+    userInfo = new UserInfo(newProfileTitle, newProfileText);
 
-api.getUserInfo()
-    .then((data => userInfo.setUserInfo(data)))
 
 
 //Функция открытия попапа редактирования
 function openProfilePopup() {
-
     const getProfileData = userInfo.getUserInfo();
     nameInput.value = getProfileData.name;
     jobInput.value = getProfileData.jobName;
@@ -67,43 +77,59 @@ function openProfilePopup() {
 
 
 const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
-    handlerSubmit: (name, about) => {
-        userInfo.setUserInfo(name, about);
-        popupEditProfile.close();
+    handlerSubmit: (data) => {
+        api.editUserData(data.name, data.job)
+            .then(result => {
+                userInfo.setUserInfo(result.name,result.about);
+                popupEditProfile.close();
+        })
     }
 });
 
+
+
  const popupAddCard = new PopupWithForm('.popup_type_add', {
     handlerSubmit: (data) => {
-        const element = addCard({
-            name: data.title,
-            link: data.link
+        api.addCard(data.title,data.link)
+            .then(result => {
+                const element = addCard(result)
+                section.addItem(element, 'prepend');
         })
-      section.addItem(element, 'prepend');
       popupAddCard.close();
     }
 });
 
+const  popupDel = new popupWithDelete(popupDelete, {
+submitHandler: (cardId) => {
+api.cardDelete(popupDel.cardId().id)
+    .then(()=>{
+        popupDel.cardId().remove()
+        popupDel.close();
+    })
+}
 
-
+})
 function addCard(item) {
+    const userId = userInfo.getId()
   const card = new Card(item,
-    {handleCardClick: (name, link) => {
+    {
+        handleCardClick: (name, link) => {
       popupImage.open({name, link});
-      }}, '.card-template')
+      },
+      handleCardDelete: (cardId) => {
+       popupDel(cardId).open();
+      }
+
+      }, '.card-template', userId)
     return card.generateCard();
 };
-
-
-
-
-
 
 
 
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
 popupImage.setEventListeners();
+popupDel.setEventListeners();
 
 /* Кнопка "редактировать" открывает модалку */
 openEditProfilePopupBtn.addEventListener("click", openProfilePopup);
