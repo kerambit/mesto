@@ -112,7 +112,14 @@ function addCard(item) {
       popupImage.open({name, link});
       },
       handleCardDelete: (cardId) => {
-       //popupDel(cardId).open();
+       // popupDel(cardId).open();
+      },
+      handleCardLike: (cardId) => {
+        api.setLike(cardId)
+            .then(({likes}) => {
+                card._likes = likes;
+                card.updateLikeCount();
+            })
       }
 
       }, '.card-template', userId)
