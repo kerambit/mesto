@@ -60,13 +60,13 @@ export default class Api {
     }
 
 
-        cardDelete(cardId)  {
+    cardDelete(cardId)  {
             return fetch(`${this._url}/cards/${cardId}`, {
-             method: "DELETE",
-             headers: this._headers,
-     })
-         .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`))
- }
+                 method: "DELETE",
+                 headers: this._headers,
+                })
+            .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`))
+    }
 
     setLike(cardId) {
         return fetch(`${this._url}/cards/likes/${cardId}`,

@@ -89,20 +89,19 @@ const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
       popupAddCard.close();
     }
 });
-/*
+
 //Попап удаления карточки
 const  popupDel = new popupWithDelete(popupDelete, {
 submitHandler: (cardId) => {
-api.cardDelete(popupDel.cardId().id)
-    .then(()=>{
-        popupDel.cardId().remove()
+api.cardDelete(cardId)
+    .then((data)=>{
+        popupDel.element.remove()
         popupDel.close();
     })
 }
 
 })
 
- */
 
 function addCard(item) {
     const userId = userInfo.getId()
@@ -111,8 +110,8 @@ function addCard(item) {
         handleCardClick: (name, link) => {
       popupImage.open({name, link});
       },
-      handleCardDelete: (cardId) => {
-       // popupDel(cardId).open();
+      handleCardDelete: (cardId, elem) => {
+        popupDel.open(cardId, elem);
       },
       handleCardLike: (cardId) => {
         api.setLike(cardId)
@@ -146,7 +145,7 @@ api.getInitialCards()
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
 popupImage.setEventListeners();
-//popupDel.setEventListeners();
+popupDel.setEventListeners();
 
 /* Кнопка "редактировать" открывает модалку */
 openEditProfilePopupBtn.addEventListener("click", openProfilePopup);

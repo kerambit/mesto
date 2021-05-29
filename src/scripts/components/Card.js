@@ -37,7 +37,7 @@ export default class Card {
       }
 
     });
-    this._element.querySelector(this._cardDelete).addEventListener("click", this._deleteCard);
+    this._element.querySelector(this._cardDelete).addEventListener("click", () => this._deleteCard());
   }
 
   generateCard() {
@@ -76,6 +76,6 @@ export default class Card {
   }
 
   _deleteCard() {
-    this._handleCardDelete(this._element);
+    this._handleCardDelete(this._id, this._element);
   }
 }
