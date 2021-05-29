@@ -34,15 +34,6 @@ const api = new Api({
     }
 });
 
-//Получаение инфорации от профиля
-api.getUserInfo()
-    .then(data => userInfo.setUserInfo(data.name,data.about, data.id))
-//Получаение инфорации по карточкам
-api.getInitialCards()
-    .then(data => {
-  section.renderer(data)
-})
-
 
 validatorAddCard.enableValidation();
 validatorEditProfile.enableValidation();
@@ -128,6 +119,14 @@ function addCard(item) {
     return card.generateCard();
 };
 
+//Получаение инфорации от профиля
+api.getUserInfo()
+    .then(data => userInfo.setUserInfo(data.name, data.about, data._id))
+//Получаение инфорации по карточкам
+api.getInitialCards()
+    .then(data => {
+        section.renderer(data)
+    })
 
 
 popupEditProfile.setEventListeners();
