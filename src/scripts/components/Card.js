@@ -16,7 +16,6 @@ export default class Card {
     this._id = id;
     this._userId = userId;
     this._handleCardDelete = handleCardDelete;
-    debugger
   }
 
   _getTemplate() {
