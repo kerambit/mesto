@@ -55,7 +55,8 @@ const section = new Section({
 /* Переменая для текста работы куда будет добавляться новый текст */
 const newProfileTitle = document.querySelector(".profile__title"),
     newProfileText = document.querySelector(".profile__text"),
-    userInfo = new UserInfo(newProfileTitle, newProfileText);
+    newAvatar = document.querySelector(".profile__avatar"),
+    userInfo = new UserInfo(newProfileTitle, newProfileText, newAvatar);
 
 
 
@@ -105,8 +106,12 @@ api.cardDelete(cardId)
 })
 
 const popupAvatar = new PopupWithForm('.popup_type_avatar-update', {
-    handlerSubmit: (data) => {
-        console.log(data);
+    handlerSubmit: ({link}) => {
+        api.updateAvatar(link)
+            .then(({avatar}) => {
+                userInfo.setAvatar(link);
+                popupAvatar.close();
+            });
     }
 })
 
@@ -142,7 +147,10 @@ function addCard(item) {
 
 //Получаение инфорации от профиля
 api.getUserInfo()
-    .then(data => userInfo.setUserInfo(data.name, data.about, data._id))
+    .then((data) => {
+        userInfo.setUserInfo(data.name, data.about, data._id)
+        userInfo.setAvatar(data.avatar);
+    })
 //Получаение инфорации по карточкам
 api.getInitialCards()
     .then(data => {
@@ -154,6 +162,7 @@ popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
 popupImage.setEventListeners();
 popupDel.setEventListeners();
+popupAvatar.setEventListeners();
 
 /* Кнопка "редактировать" открывает модалку */
 openEditProfilePopupBtn.addEventListener("click", openProfilePopup);
