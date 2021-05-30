@@ -21,6 +21,9 @@ const openAddCardPopupBtn = document.querySelector(".profile__add-button");
 const popupContainerAdd = document.querySelector(".popup__container_add");
 const validatorAddCard = new FormValidator(validateConfig, popupContainerAdd);
 
+const avatarUploadContainer = document.querySelector('.popup_type_avatar-update');
+const validatorAvatarUpload = new FormValidator(validateConfig, avatarUploadContainer);
+
 const popupAvatarEdit = document.querySelector('.profile__edit-button-avatar');
 
 const popupContainerEdit = document.querySelector(".popup__container_type_edit-profile");
@@ -39,6 +42,7 @@ const api = new Api({
 
 validatorAddCard.enableValidation();
 validatorEditProfile.enableValidation();
+validatorAvatarUpload.enableValidation();
 
 const popupImage = new PopupWithImage('.popup_type_image');
 
@@ -172,6 +176,7 @@ openAddCardPopupBtn.addEventListener("click", () => {
 });
 
 popupAvatarEdit.addEventListener('click', () => {
+    validatorAvatarUpload.removeInputError();
     popupAvatar.open();
 })
 
