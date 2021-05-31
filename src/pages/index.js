@@ -164,26 +164,41 @@ function addCard(item) {
     return card.generateCard();
 };
 
+Promise.all([
+    api.getUserInfo()
+        .then((data) => {
+            userInfo.setUserInfo(data.name, data.about, data._id)
+            userInfo.setAvatar(data.avatar);
+        })
+        .catch((err) => {
+            console.log(err);
+        }),
+    api.getInitialCards()
+        .then(data => {
+            section.renderer(data)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+])
+    .catch(error => console.log(error))
+
 //Получаение инфорации от профиля
-api.getUserInfo()
-    .then((data) => {
-        userInfo.setUserInfo(data.name, data.about, data._id)
-        userInfo.setAvatar(data.avatar);
-    })
-    .catch((err) => {
-        console.log(err);
-    })
+// api.getUserInfo()
+//     .then((data) => {
+//         userInfo.setUserInfo(data.name, data.about, data._id)
+//         userInfo.setAvatar(data.avatar);
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     })
 
 
-//Получаение инфорации по карточкам
-api.getInitialCards()
-
-    .then(data => {
-        section.renderer(data)
-    })
-    .catch((err) => {
-        console.log(err);
-    })
+// //Получаение инфорации по карточкам
+// api.getInitialCards()
+//     .then(data => {
+//         section.renderer(data)
+//     })
 
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
